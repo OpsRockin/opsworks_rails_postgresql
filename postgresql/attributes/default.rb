@@ -1,2 +1,2 @@
 # default[:node][:postgresql] = Mash.new
-include_attribute 'deploy::deploy'
+include_attribute 'deploy'
