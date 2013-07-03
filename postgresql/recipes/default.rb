@@ -9,6 +9,7 @@ node.set[:postgresql] = Mash.new unless node[:postgresql]
 
 node.set[:postgresql][:password] = [OpenSSL::Random.random_bytes(24)].pack("m").chomp unless node[:postgresql][:password]
 
+Chef::Log.info JSON.pretty_generate(node)
 psql_command = "sudo -u postgres /usr/bin/psql"
 
 node[:deploy].each do |application, deploy|
