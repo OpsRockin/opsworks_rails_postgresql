@@ -15,6 +15,7 @@ node[:deploy].each do |application, deploy|
     command %Q{#{psql_command} -c "create user #{application} with password '#{node[:postgresql][:password]}';"}
     not_if do
       `#{psql_command} -t -c 'select rolname from pg_roles;'`.split.include?(application)
+    end
   end
 
   execute "create new database owned by #{application} for #{application}" do
