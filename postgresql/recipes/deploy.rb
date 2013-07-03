@@ -13,4 +13,5 @@ node[:deploy].each do |application, deploy|
     :password => node[:postgresql][:password],
     :database => "#{application}_#{deploy[:rails_env]}"
   }
+  node.set[:deploy][application][:migrate] = true
 end
