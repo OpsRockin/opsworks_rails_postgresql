@@ -18,6 +18,15 @@ node.set[:postgresql][:password] = pg_pw unless node[:postgresql][:password]
 Chef::Log.info JSON.pretty_generate(node)
 psql_command = "sudo -u postgres /usr/bin/psql"
 
+if node[:postgresql][:extentions]
+  node[:postgresql][:extentions].each do |ext|
+    execute "add extention #{ext} to template1" do
+      action :run
+      command %Q{#{psql_command} template1 -c "create extension #{ext};"}
+    end
+  end
+end
+
 node[:deploy].each do |application, deploy|
   execute "create new role for #{application}" do
     action :run
@@ -34,6 +43,7 @@ node[:deploy].each do |application, deploy|
       `#{psql_command} -t -c 'select datname from pg_database;'`.split.include?("#{application}_#{deploy[:rails_env]}")
     end
   end
+
 end
 
 service 'postgresql' do
