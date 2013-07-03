@@ -4,6 +4,7 @@
 #
 # Copyright 2013, HiganWorks LLC
 #
+node.set[:postgresql] = Mash.new unless node[:postgresql]
 
 node.set[:postgresql][:password] = [OpenSSL::Random.random_bytes(24)].pack("m").chomp unless node[:postgresql][:password]
 

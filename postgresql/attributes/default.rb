@@ -1,1 +1,1 @@
-default[:node][:postgresql] = Mash.new
+# default[:node][:postgresql] = Mash.new
