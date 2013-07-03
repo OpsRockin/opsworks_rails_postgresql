@@ -24,3 +24,4 @@ node[:deploy].each do |application, deploy|
       `#{psql_command} -t -c 'select datname from pg_database;'`.split.include?("#{application}_#{deploy[:rails_env]}")
     end
   end
+end
