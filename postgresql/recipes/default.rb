@@ -6,7 +6,14 @@
 #
 node.set[:postgresql] = Mash.new unless node[:postgresql]
 
-node.set[:postgresql][:password] = [OpenSSL::Random.random_bytes(24)].pack("m").chomp unless node[:postgresql][:password]
+
+pg_pw = String.new
+while pg_pw.length < 20
+  pg_pw << OpenSSL::Random.random_bytes(1).gsub(/\W/, '')
+end
+
+
+node.set[:postgresql][:password] = pg_pw unless node[:postgresql][:password]
 
 Chef::Log.info JSON.pretty_generate(node)
 psql_command = "sudo -u postgres /usr/bin/psql"
@@ -27,4 +34,17 @@ node[:deploy].each do |application, deploy|
       `#{psql_command} -t -c 'select datname from pg_database;'`.split.include?("#{application}_#{deploy[:rails_env]}")
     end
   end
+end
+
+service 'postgresql' do
+  action :nothing
+end
+
+template '/etc/postgresql/9.1/main/pg_hba.conf' do
+  source 'pg_hba.conf.erb'
+  mode '0640'
+  owner 'postgres'
+  group 'postgres'
+  action :create
+  notifies :reload, 'service[postgresql]'
 end
