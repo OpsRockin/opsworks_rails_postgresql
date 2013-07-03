@@ -5,7 +5,7 @@
 # Copyright 2013, HiganWorks LLC
 #
 
-include_recipe 'deploy'
+include_recipe 'deploy::default'
 node[:deploy].each do |application, deploy|
   node.set[:deploy][application][:database] = {
     :adapter => 'postgresql',
