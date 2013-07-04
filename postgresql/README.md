@@ -17,12 +17,38 @@ Layer Settings requirements
 ### Custom Chef Recipes
 
 #### Setup
+- postgresql::default
 
 #### Configure
 
 #### Deploy
 
-- postgresql::default
+
+### Chef custom json sample
+
+
+```
+{
+  "postgresql" : {
+  "password" : "your_password",
+  "extentions" : [
+    "hstore"
+    ]
+  },
+  "deploy": {
+    "app_name": {
+      "database": {
+        "adapter": "postgresql",
+        "username": "app_name",
+        "database": "app_name_production"
+        "password": "your_password"
+      },
+      "migrate": true,
+      "auto_bundle_on_deploy": true
+    }
+  }
+}
+```
 
 
 
