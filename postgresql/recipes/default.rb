@@ -51,6 +51,7 @@ end
 
 service 'postgresql' do
   action :nothing
+  supports :status => true, :restart => true, :reload => true
 end
 
 template '/etc/postgresql/9.1/main/pg_hba.conf' do
