@@ -56,5 +56,5 @@ template '/etc/postgresql/9.1/main/pg_hba.conf' do
   owner 'postgres'
   group 'postgres'
   action :create
-  notifies :reload, 'service[postgresql]'
+  notifies :reload, 'service[postgresql]', :immediately
 end
