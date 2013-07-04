@@ -23,6 +23,9 @@ if node[:postgresql][:extentions]
     execute "add extention #{ext} to template1" do
       action :run
       command %Q{#{psql_command} template1 -c "create extension #{ext};"}
+      not_if do
+        `#{psql_command} template1 -t -c 'select proname from pg_proc;'`.split.include?(ext)
+      end
     end
   end
 end
