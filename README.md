@@ -13,6 +13,7 @@ Layer Settings requirements
 
 - postgresql-server-dev-9.1
 - postgresql-9.1
+- postgresql-contrib-9.1
 
 ### Custom Chef Recipes
 
